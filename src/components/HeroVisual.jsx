@@ -3,23 +3,12 @@ function HeroVisual({ visualRef }) {
     <div
       ref={visualRef}
       className="hero-visual"
-      data-scroll-visual
       aria-hidden="true"
     >
       <div className="visual-glow" />
 
       <div className="visual-orbit visual-orbit-one" />
       <div className="visual-orbit visual-orbit-two" />
-
-      <div className="visual-chip visual-chip-left">
-        <span>01</span>
-        <p>SCROLL MOTION</p>
-      </div>
-
-      <div className="visual-chip visual-chip-right">
-        <span>60</span>
-        <p>FPS TARGET</p>
-      </div>
 
       <svg
         className="concept-car"
@@ -70,9 +59,20 @@ function HeroVisual({ visualRef }) {
             y2="0"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0%" stopColor="#ff6238" stopOpacity="0" />
-            <stop offset="45%" stopColor="#ff6238" />
-            <stop offset="100%" stopColor="#ffb35c" stopOpacity="0" />
+            <stop
+              offset="0%"
+              stopColor="#ff6238"
+              stopOpacity="0"
+            />
+            <stop
+              offset="45%"
+              stopColor="#ff6238"
+            />
+            <stop
+              offset="100%"
+              stopColor="#ffb35c"
+              stopOpacity="0"
+            />
           </linearGradient>
 
           <filter
@@ -175,49 +175,97 @@ function HeroVisual({ visualRef }) {
           opacity="0.85"
         />
 
-        <g className="car-wheel" data-car-wheel>
-          <circle cx="236" cy="328" r="62" fill="#050608" />
+        {/* Front wheel */}
+        <circle
+          cx="236"
+          cy="328"
+          r="62"
+          fill="#050608"
+        />
 
-          <circle
-            cx="236"
-            cy="328"
-            r="42"
-            fill="url(#wheelMetal)"
-            stroke="#454b54"
-            strokeWidth="3"
-          />
+        <circle
+          cx="236"
+          cy="328"
+          r="42"
+          fill="url(#wheelMetal)"
+          stroke="#454b54"
+          strokeWidth="3"
+        />
 
+        <g data-wheel-front>
           <path
-            d="M236 292 V364 M200 328 H272 M211 303 L261 353 M261 303 L211 353"
-            stroke="#9ca3af"
+            d="
+              M236 294 V362
+              M202 328 H270
+              M212 304 L260 352
+              M260 304 L212 352
+            "
+            stroke="#b9bec6"
             strokeWidth="4"
-            opacity="0.55"
+            strokeLinecap="round"
+            opacity="0.62"
           />
-
-          <circle cx="236" cy="328" r="14" fill="#d6dae0" />
         </g>
 
-        <g className="car-wheel" data-car-wheel>
-          <circle cx="650" cy="328" r="62" fill="#050608" />
+        <circle
+          cx="236"
+          cy="328"
+          r="14"
+          fill="#d6dae0"
+        />
 
-          <circle
-            cx="650"
-            cy="328"
-            r="42"
-            fill="url(#wheelMetal)"
-            stroke="#454b54"
-            strokeWidth="3"
-          />
+        <circle
+          cx="236"
+          cy="328"
+          r="6"
+          fill="#3b4149"
+        />
 
+        {/* Rear wheel */}
+        <circle
+          cx="650"
+          cy="328"
+          r="62"
+          fill="#050608"
+        />
+
+        <circle
+          cx="650"
+          cy="328"
+          r="42"
+          fill="url(#wheelMetal)"
+          stroke="#454b54"
+          strokeWidth="3"
+        />
+
+        <g data-wheel-rear>
           <path
-            d="M650 292 V364 M614 328 H686 M625 303 L675 353 M675 303 L625 353"
-            stroke="#9ca3af"
+            d="
+              M650 294 V362
+              M616 328 H684
+              M626 304 L674 352
+              M674 304 L626 352
+            "
+            stroke="#b9bec6"
             strokeWidth="4"
-            opacity="0.55"
+            strokeLinecap="round"
+            opacity="0.62"
           />
-
-          <circle cx="650" cy="328" r="14" fill="#d6dae0" />
         </g>
+
+        <circle
+          cx="650"
+          cy="328"
+          r="14"
+          fill="#d6dae0"
+        />
+
+        <circle
+          cx="650"
+          cy="328"
+          r="6"
+          fill="#3b4149"
+        />
 
         <path
           d="M385 290 H546"
@@ -237,11 +285,6 @@ function HeroVisual({ visualRef }) {
       </svg>
 
       <div className="visual-floor-line" />
-
-      <div className="visual-index">
-        <span>ITZFIZZ</span>
-        <span>© 2026</span>
-      </div>
     </div>
   );
 }

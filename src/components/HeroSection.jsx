@@ -6,10 +6,16 @@ import { useGSAP } from "@gsap/react";
 import HeroVisual from "./HeroVisual";
 import { heroStats } from "../data/stats";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(
+  ScrollTrigger,
+  useGSAP,
+);
 
-const welcomeLetters = "WELCOME".split("");
-const brandLetters = "ITZFIZZ".split("");
+const welcomeLetters =
+  "WELCOME".split("");
+
+const brandLetters =
+  "ITZFIZZ".split("");
 
 function HeroSection() {
   const sectionRef = useRef(null);
@@ -17,34 +23,54 @@ function HeroSection() {
 
   useGSAP(
     () => {
-      const section = sectionRef.current;
-      const visual = visualRef.current;
+      const section =
+        sectionRef.current;
 
-      if (!section || !visual) return;
+      const visual =
+        visualRef.current;
 
-      const select = gsap.utils.selector(section);
+      if (!section || !visual) {
+        return;
+      }
 
-      /* =====================================================
-         ELEMENT REFERENCES
-         ===================================================== */
+      const select =
+        gsap.utils.selector(section);
 
-      const letters = select("[data-hero-letter]");
-      const statCards = select("[data-stat-card]");
-      const wheels = select("[data-car-wheel]");
+      const letters =
+        select("[data-hero-letter]");
 
-      const topbar = select(".hero-topbar");
-      const eyebrow = select(".hero-eyebrow");
-      const description = select(".hero-description");
-      const techStack = select(".hero-tech-stack");
-      const scrollCue = select(".scroll-cue");
+      const statCards =
+        select("[data-stat-card]");
 
-      const heroCopy = select(".hero-copy");
+      const frontWheel =
+        select("[data-wheel-front]")[0];
 
-      const orbitOne = select(".visual-orbit-one");
-      const orbitTwo = select(".visual-orbit-two");
+      const rearWheel =
+        select("[data-wheel-rear]")[0];
 
-      const chipLeft = select(".visual-chip-left");
-      const chipRight = select(".visual-chip-right");
+      const topbar =
+        select(".hero-topbar");
+
+      const eyebrow =
+        select(".hero-eyebrow");
+
+      const description =
+        select(".hero-description");
+
+      const techStack =
+        select(".hero-tech-stack");
+
+      const scrollCue =
+        select(".scroll-cue");
+
+      const heroCopy =
+        select(".hero-copy");
+
+      const orbitOne =
+        select(".visual-orbit-one");
+
+      const orbitTwo =
+        select(".visual-orbit-two");
 
       const progressFill =
         select(".scroll-progress-fill")[0];
@@ -56,10 +82,6 @@ function HeroSection() {
         window.matchMedia(
           "(prefers-reduced-motion: reduce)",
         ).matches;
-
-      /* =====================================================
-         REDUCED MOTION ACCESSIBILITY
-         ===================================================== */
 
       if (prefersReducedMotion) {
         gsap.set(
@@ -79,130 +101,121 @@ function HeroSection() {
         );
 
         if (progressFill) {
-          gsap.set(progressFill, {
-            scaleY: 0,
-          });
+          gsap.set(
+            progressFill,
+            {
+              scaleY: 0,
+            },
+          );
         }
 
         if (progressNumber) {
-          progressNumber.textContent = "00";
+          progressNumber.textContent =
+            "00";
         }
 
         return;
       }
 
-      /* =====================================================
-         INITIAL STATES
-         ===================================================== */
-
       gsap.set(topbar, {
-        y: -16,
+        y: -14,
         opacity: 0,
       });
 
       gsap.set(eyebrow, {
-        y: 14,
+        y: 12,
         opacity: 0,
       });
 
       gsap.set(letters, {
-        yPercent: 110,
+        yPercent: 115,
         opacity: 0,
-        rotateX: -20,
-        transformOrigin: "50% 100%",
+        rotateX: -18,
+        transformOrigin:
+          "50% 100%",
       });
 
       gsap.set(description, {
-        y: 18,
+        y: 16,
         opacity: 0,
       });
 
       gsap.set(techStack, {
-        y: 18,
+        y: 16,
         opacity: 0,
       });
 
       gsap.set(visual, {
-        xPercent: -10,
-        y: 28,
-        scale: 0.92,
+        xPercent: -6,
+        y: 20,
+        scale: 0.96,
         opacity: 0,
       });
 
       gsap.set(statCards, {
-        y: 26,
+        y: 18,
         opacity: 0,
       });
 
       gsap.set(scrollCue, {
-        y: 14,
+        y: 12,
         opacity: 0,
       });
 
-      gsap.set(progressFill, {
-        scaleY: 0,
-        transformOrigin: "top",
-      });
+      if (progressFill) {
+        gsap.set(
+          progressFill,
+          {
+            scaleY: 0,
+            transformOrigin:
+              "top",
+          },
+        );
+      }
 
-      /* =====================================================
-         INTRO ANIMATION
-         ===================================================== */
+      const intro =
+        gsap.timeline({
+          defaults: {
+            ease: "power3.out",
+          },
+        });
 
-      const introTimeline = gsap.timeline({
-        defaults: {
-          ease: "power3.out",
-        },
-      });
-
-      introTimeline
+      intro
         .to(topbar, {
           y: 0,
           opacity: 1,
-          duration: 0.55,
+          duration: 0.45,
         })
-
         .to(
           eyebrow,
           {
             y: 0,
             opacity: 1,
-            duration: 0.5,
+            duration: 0.42,
           },
-          "-=0.28",
+          "-=0.22",
         )
-
         .to(
           letters,
           {
             yPercent: 0,
             opacity: 1,
             rotateX: 0,
-            duration: 0.72,
-            stagger: 0.035,
+            duration: 0.68,
+            stagger: 0.032,
           },
-          "-=0.18",
+          "-=0.12",
         )
-
         .to(
-          description,
+          [description, techStack],
           {
             y: 0,
             opacity: 1,
-            duration: 0.55,
+            duration: 0.46,
+            stagger: 0.06,
           },
-          "-=0.43",
+          "-=0.36",
         )
-
-        .to(
-          techStack,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.55,
-          },
-          "-=0.48",
-        )
-
         .to(
           visual,
           {
@@ -210,135 +223,130 @@ function HeroSection() {
             y: 0,
             scale: 1,
             opacity: 1,
-            duration: 1,
+            duration: 0.82,
           },
-          "-=0.5",
+          "-=0.38",
         )
-
         .to(
           statCards,
           {
             y: 0,
             opacity: 1,
-            duration: 0.55,
+            duration: 0.5,
             stagger: 0.1,
           },
-          "-=0.58",
+          "-=0.46",
         )
-
         .to(
           scrollCue,
           {
             y: 0,
             opacity: 1,
-            duration: 0.4,
+            duration: 0.3,
           },
-          "-=0.12",
+          "-=0.1",
         );
 
-      /* =====================================================
-         SCROLL-DRIVEN TIMELINE
-         ===================================================== */
+      const scrollTimeline =
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: () =>
+              `+=${Math.max(
+                window.innerHeight *
+                  1.65,
+                1350,
+              )}`,
+            pin: true,
+            scrub: 0.8,
+            anticipatePin: 1,
+            invalidateOnRefresh:
+              true,
+            onUpdate: (self) => {
+              const percentage =
+                Math.round(
+                  self.progress *
+                    100,
+                );
 
-      const scrollTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
+              if (progressFill) {
+                gsap.set(
+                  progressFill,
+                  {
+                    scaleY:
+                      self.progress,
+                  },
+                );
+              }
 
-          start: "top top",
-
-          end: () => {
-            const distance = Math.max(
-              window.innerHeight * 1.8,
-              1500,
-            );
-
-            return `+=${distance}`;
+              if (
+                progressNumber
+              ) {
+                progressNumber.textContent =
+                  String(
+                    percentage,
+                  ).padStart(
+                    2,
+                    "0",
+                  );
+              }
+            },
           },
-
-          pin: true,
-
-          scrub: 0.9,
-
-          anticipatePin: 1,
-
-          invalidateOnRefresh: true,
-
-          onUpdate: (self) => {
-            const progress = Math.round(
-              self.progress * 100,
-            );
-
-            if (progressFill) {
-              gsap.set(progressFill, {
-                scaleY: self.progress,
-              });
-            }
-
-            if (progressNumber) {
-              progressNumber.textContent =
-                String(progress).padStart(2, "0");
-            }
-          },
-        },
-      });
-
-      /* =====================================================
-         PHASE A
-         Vehicle moves toward right
-         ===================================================== */
+        });
 
       scrollTimeline.to(
         visual,
         {
           xPercent: () =>
-            window.innerWidth <= 760
-              ? 13
-              : 27,
-
-          yPercent: () =>
-            window.innerWidth <= 760
-              ? -2
-              : -6,
-
-          scale: 1.06,
-
-          rotate: 1.4,
-
+            window.innerWidth <=
+            760
+              ? 7
+              : 15,
+          yPercent: -1,
+          scale: 1.025,
+          rotate: 0.45,
           ease: "none",
-
-          duration: 0.44,
+          duration: 0.48,
         },
         0,
       );
 
-      /* Wheels rotate with scroll */
+      if (frontWheel) {
+        scrollTimeline.to(
+          frontWheel,
+          {
+            rotation: 420,
+            svgOrigin:
+              "236 328",
+            ease: "none",
+            duration: 0.48,
+          },
+          0,
+        );
+      }
 
-      scrollTimeline.to(
-        wheels,
-        {
-          rotation: 540,
-
-          transformOrigin: "50% 50%",
-
-          ease: "none",
-
-          duration: 0.44,
-        },
-        0,
-      );
-
-      /* Orbit movement */
+      if (rearWheel) {
+        scrollTimeline.to(
+          rearWheel,
+          {
+            rotation: 420,
+            svgOrigin:
+              "650 328",
+            ease: "none",
+            duration: 0.48,
+          },
+          0,
+        );
+      }
 
       scrollTimeline.to(
         orbitOne,
         {
-          rotate: 110,
-
-          scale: 1.06,
-
+          rotate: 90,
+          scale: 1.025,
           ease: "none",
-
-          duration: 0.44,
+          duration: 0.48,
         },
         0,
       );
@@ -346,198 +354,139 @@ function HeroSection() {
       scrollTimeline.to(
         orbitTwo,
         {
-          rotate: -80,
-
-          scale: 0.95,
-
+          rotate: -65,
+          scale: 0.98,
           ease: "none",
-
-          duration: 0.44,
+          duration: 0.48,
         },
         0,
       );
-
-      /* Heading subtle parallax */
 
       scrollTimeline.to(
         heroCopy,
         {
-          yPercent: -7,
-
-          opacity: 0.78,
-
+          yPercent: -2,
+          opacity: 0.94,
           ease: "none",
-
-          duration: 0.44,
+          duration: 0.48,
         },
         0,
       );
-
-      /* HUD depth movement */
-
-      scrollTimeline.to(
-        chipLeft,
-        {
-          x: -36,
-
-          y: -18,
-
-          ease: "none",
-
-          duration: 0.44,
-        },
-        0,
-      );
-
-      scrollTimeline.to(
-        chipRight,
-        {
-          x: 38,
-
-          y: 18,
-
-          ease: "none",
-
-          duration: 0.44,
-        },
-        0,
-      );
-
-      /* =====================================================
-         PHASE B
-         Vehicle moves back toward left
-         ===================================================== */
 
       scrollTimeline.to(
         visual,
         {
           xPercent: () =>
-            window.innerWidth <= 760
-              ? -8
-              : -18,
-
-          yPercent: () =>
-            window.innerWidth <= 760
-              ? 4
-              : 8,
-
-          scale: 0.94,
-
-          rotate: -1.25,
-
+            window.innerWidth <=
+            760
+              ? -4
+              : -8,
+          yPercent: 1,
+          scale: 0.99,
+          rotate: -0.35,
           ease: "none",
-
-          duration: 0.56,
+          duration: 0.52,
         },
-        0.44,
+        0.48,
       );
 
-      scrollTimeline.to(
-        wheels,
-        {
-          rotation: 1080,
+      if (frontWheel) {
+        scrollTimeline.to(
+          frontWheel,
+          {
+            rotation: 840,
+            svgOrigin:
+              "236 328",
+            ease: "none",
+            duration: 0.52,
+          },
+          0.48,
+        );
+      }
 
-          transformOrigin: "50% 50%",
-
-          ease: "none",
-
-          duration: 0.56,
-        },
-        0.44,
-      );
+      if (rearWheel) {
+        scrollTimeline.to(
+          rearWheel,
+          {
+            rotation: 840,
+            svgOrigin:
+              "650 328",
+            ease: "none",
+            duration: 0.52,
+          },
+          0.48,
+        );
+      }
 
       scrollTimeline.to(
         orbitOne,
         {
-          rotate: 190,
-
-          scale: 0.95,
-
+          rotate: 170,
+          scale: 0.985,
           ease: "none",
-
-          duration: 0.56,
+          duration: 0.52,
         },
-        0.44,
+        0.48,
       );
 
       scrollTimeline.to(
         orbitTwo,
         {
-          rotate: -150,
-
-          scale: 1.05,
-
+          rotate: -135,
+          scale: 1.02,
           ease: "none",
-
-          duration: 0.56,
+          duration: 0.52,
         },
-        0.44,
+        0.48,
       );
 
       scrollTimeline.to(
         heroCopy,
         {
-          yPercent: -13,
-
-          opacity: 0.47,
-
+          yPercent: -4,
+          opacity: 0.88,
           ease: "none",
-
-          duration: 0.56,
+          duration: 0.52,
         },
-        0.44,
+        0.48,
       );
-
-      /* =====================================================
-         STATISTICS MOTION
-         ===================================================== */
 
       scrollTimeline.to(
         statCards,
         {
           y: (index) =>
             index % 2 === 0
-              ? -8
-              : 8,
-
+              ? -3
+              : 3,
           ease: "none",
-
-          stagger: 0.025,
-
-          duration: 0.3,
+          stagger: 0.018,
+          duration: 0.25,
         },
-        0.52,
+        0.55,
       );
-
-      /* =====================================================
-         SCROLL CUE EXIT
-         ===================================================== */
 
       scrollTimeline.to(
         scrollCue,
         {
-          y: 18,
-
+          y: 10,
           opacity: 0,
-
           ease: "none",
-
-          duration: 0.12,
+          duration: 0.1,
         },
         0,
       );
 
-      /* =====================================================
-         REFRESH AFTER INITIAL LAYOUT
-         ===================================================== */
-
       const refreshId =
-        requestAnimationFrame(() => {
-          ScrollTrigger.refresh();
-        });
+        requestAnimationFrame(
+          () => {
+            ScrollTrigger.refresh();
+          },
+        );
 
       return () => {
-        cancelAnimationFrame(refreshId);
+        cancelAnimationFrame(
+          refreshId,
+        );
       };
     },
     {
@@ -549,12 +498,8 @@ function HeroSection() {
     <section
       ref={sectionRef}
       id="hero"
-      className="hero-shell relative isolate min-h-[100svh] overflow-hidden"
+      className="hero-shell"
     >
-      {/* ===================================================
-          BACKGROUND LAYERS
-          =================================================== */}
-
       <div className="hero-grid-pattern" />
 
       <div
@@ -575,14 +520,9 @@ function HeroSection() {
       </div>
 
       <div className="hero-ambient hero-ambient-left" />
-
       <div className="hero-ambient hero-ambient-right" />
 
       <div className="hero-inner">
-        {/* ===================================================
-            TOP BAR
-            =================================================== */}
-
         <header className="hero-topbar">
           <a
             href="#hero"
@@ -604,133 +544,116 @@ function HeroSection() {
             <span>
               SCROLL EXPERIENCE
             </span>
-
-            <span className="meta-divider" />
-
-            <span>
-              2026
-            </span>
           </div>
         </header>
 
-        {/* ===================================================
-            MAIN HERO CONTENT
-            =================================================== */}
+        <div className="hero-copy">
+          <div className="hero-eyebrow">
+            <span>
+              INTERACTIVE WEB
+              EXPERIENCE
+            </span>
 
-        <div className="hero-main">
-          <div className="hero-copy">
-            <div className="hero-eyebrow">
-              <span>
-                INTERACTIVE WEB EXPERIENCE
-              </span>
-
-              <span className="eyebrow-line" />
-
-              <span>
-                01 / HERO
-              </span>
-            </div>
-
-            <h1
-              className="hero-title"
-              aria-label="Welcome Itzfizz"
-            >
-              <span className="hero-title-word">
-                {welcomeLetters.map(
-                  (letter, index) => (
-                    <span
-                      className="hero-letter"
-                      key={`welcome-${index}`}
-                      data-hero-letter
-                    >
-                      {letter}
-                    </span>
-                  ),
-                )}
-              </span>
-
-              <span
-                className="hero-title-word hero-title-word-accent"
-                aria-hidden="true"
-              >
-                {brandLetters.map(
-                  (letter, index) => (
-                    <span
-                      className="hero-letter"
-                      key={`itzfizz-${index}`}
-                      data-hero-letter
-                    >
-                      {letter}
-                    </span>
-                  ),
-                )}
-              </span>
-            </h1>
-
-            <div className="hero-description-row">
-              <p className="hero-description">
-                A premium scroll-driven digital
-                experience built around motion,
-                precision and responsive interaction.
-              </p>
-
-              <div className="hero-tech-stack">
-                <span>REACT</span>
-
-                <span>GSAP</span>
-
-                <span>TAILWIND</span>
-              </div>
-            </div>
+            <span className="eyebrow-line" />
           </div>
 
-          {/* =================================================
-              MAIN SCROLL VISUAL
-              ================================================= */}
+          <h1
+            className="hero-title"
+            aria-label="Welcome Itzfizz"
+          >
+            <span className="hero-title-word">
+              {welcomeLetters.map(
+                (
+                  letter,
+                  index,
+                ) => (
+                  <span
+                    className="hero-letter"
+                    key={`welcome-${index}`}
+                    data-hero-letter
+                  >
+                    {letter}
+                  </span>
+                ),
+              )}
+            </span>
 
-          <div className="hero-stage">
-            <HeroVisual
-              visualRef={visualRef}
-            />
+            <span
+              className="hero-title-word hero-title-word-accent"
+              aria-hidden="true"
+            >
+              {brandLetters.map(
+                (
+                  letter,
+                  index,
+                ) => (
+                  <span
+                    className="hero-letter"
+                    key={`itzfizz-${index}`}
+                    data-hero-letter
+                  >
+                    {letter}
+                  </span>
+                ),
+              )}
+            </span>
+          </h1>
+
+          <div className="hero-description-row">
+            <p className="hero-description">
+              A premium scroll-driven
+              hero experience designed
+              to showcase smooth motion,
+              polished interaction, and
+              modern frontend execution.
+            </p>
+
+            <div className="hero-tech-stack">
+              <span>REACT</span>
+              <span>GSAP</span>
+              <span>TAILWIND</span>
+            </div>
           </div>
         </div>
 
-        {/* ===================================================
-            IMPACT STATISTICS
-            =================================================== */}
+        <div className="hero-stage">
+          <HeroVisual
+            visualRef={
+              visualRef
+            }
+          />
+        </div>
 
         <div className="hero-bottom">
           <div className="stats-grid">
-            {heroStats.map((stat) => (
-              <article
-                className="stat-card"
-                key={stat.id}
-                data-stat-card
-              >
-                <div className="stat-top">
-                  <span className="stat-index">
-                    {stat.id}
-                  </span>
+            {heroStats.map(
+              (stat) => (
+                <article
+                  className="stat-card"
+                  key={stat.id}
+                  data-stat-card
+                >
+                  <div className="stat-top">
+                    <span>
+                      {stat.id}
+                    </span>
 
-                  <span className="stat-arrow">
-                    ↗
-                  </span>
-                </div>
+                    <span className="stat-arrow">
+                      ↗
+                    </span>
+                  </div>
 
-                <strong className="stat-value">
-                  {stat.value}
-                </strong>
+                  <strong className="stat-value">
+                    {stat.value}
+                  </strong>
 
-                <p className="stat-label">
-                  {stat.label}
-                </p>
-              </article>
-            ))}
+                  <p className="stat-label">
+                    {stat.label}
+                  </p>
+                </article>
+              ),
+            )}
           </div>
-
-          {/* =================================================
-              SCROLL INDICATOR
-              ================================================= */}
 
           <div className="scroll-cue">
             <div className="scroll-cue-line">
