@@ -175,31 +175,49 @@ function HeroVisual({ visualRef }) {
           opacity="0.85"
         />
 
-        <circle cx="236" cy="328" r="62" fill="#050608" />
+        <g className="car-wheel" data-car-wheel>
+          <circle cx="236" cy="328" r="62" fill="#050608" />
 
-        <circle
-          cx="236"
-          cy="328"
-          r="42"
-          fill="url(#wheelMetal)"
-          stroke="#454b54"
-          strokeWidth="3"
-        />
+          <circle
+            cx="236"
+            cy="328"
+            r="42"
+            fill="url(#wheelMetal)"
+            stroke="#454b54"
+            strokeWidth="3"
+          />
 
-        <circle cx="236" cy="328" r="14" fill="#d6dae0" />
+          <path
+            d="M236 292 V364 M200 328 H272 M211 303 L261 353 M261 303 L211 353"
+            stroke="#9ca3af"
+            strokeWidth="4"
+            opacity="0.55"
+          />
 
-        <circle cx="650" cy="328" r="62" fill="#050608" />
+          <circle cx="236" cy="328" r="14" fill="#d6dae0" />
+        </g>
 
-        <circle
-          cx="650"
-          cy="328"
-          r="42"
-          fill="url(#wheelMetal)"
-          stroke="#454b54"
-          strokeWidth="3"
-        />
+        <g className="car-wheel" data-car-wheel>
+          <circle cx="650" cy="328" r="62" fill="#050608" />
 
-        <circle cx="650" cy="328" r="14" fill="#d6dae0" />
+          <circle
+            cx="650"
+            cy="328"
+            r="42"
+            fill="url(#wheelMetal)"
+            stroke="#454b54"
+            strokeWidth="3"
+          />
+
+          <path
+            d="M650 292 V364 M614 328 H686 M625 303 L675 353 M675 303 L625 353"
+            stroke="#9ca3af"
+            strokeWidth="4"
+            opacity="0.55"
+          />
+
+          <circle cx="650" cy="328" r="14" fill="#d6dae0" />
+        </g>
 
         <path
           d="M385 290 H546"
