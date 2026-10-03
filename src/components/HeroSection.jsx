@@ -1,4 +1,5 @@
 import { useRef } from "react";
+
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -6,16 +7,10 @@ import { useGSAP } from "@gsap/react";
 import HeroVisual from "./HeroVisual";
 import { heroStats } from "../data/stats";
 
-gsap.registerPlugin(
-  ScrollTrigger,
-  useGSAP,
-);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const welcomeLetters =
-  "WELCOME".split("");
-
-const brandLetters =
-  "ITZFIZZ".split("");
+const welcomeLetters = "WELCOME".split("");
+const brandLetters = "ITZFIZZ".split("");
 
 function HeroSection() {
   const sectionRef = useRef(null);
@@ -23,24 +18,17 @@ function HeroSection() {
 
   useGSAP(
     () => {
-      const section =
-        sectionRef.current;
-
-      const visual =
-        visualRef.current;
+      const section = sectionRef.current;
+      const visual = visualRef.current;
 
       if (!section || !visual) {
         return;
       }
 
-      const select =
-        gsap.utils.selector(section);
+      const select = gsap.utils.selector(section);
 
-      const letters =
-        select("[data-hero-letter]");
-
-      const statCards =
-        select("[data-stat-card]");
+      const letters = select("[data-hero-letter]");
+      const statCards = select("[data-stat-card]");
 
       const frontWheel =
         select("[data-wheel-front]")[0];
@@ -83,6 +71,11 @@ function HeroSection() {
           "(prefers-reduced-motion: reduce)",
         ).matches;
 
+      /*
+       * Accessibility:
+       * Skip animated entrance/scroll transforms
+       * when reduced motion is requested.
+       */
       if (prefersReducedMotion) {
         gsap.set(
           [
@@ -101,12 +94,9 @@ function HeroSection() {
         );
 
         if (progressFill) {
-          gsap.set(
-            progressFill,
-            {
-              scaleY: 0,
-            },
-          );
+          gsap.set(progressFill, {
+            scaleY: 0,
+          });
         }
 
         if (progressNumber) {
@@ -117,6 +107,9 @@ function HeroSection() {
         return;
       }
 
+      /*
+       * Initial animation states
+       */
       gsap.set(topbar, {
         y: -14,
         opacity: 0,
@@ -131,8 +124,7 @@ function HeroSection() {
         yPercent: 115,
         opacity: 0,
         rotateX: -18,
-        transformOrigin:
-          "50% 100%",
+        transformOrigin: "50% 100%",
       });
 
       gsap.set(description, {
@@ -163,22 +155,20 @@ function HeroSection() {
       });
 
       if (progressFill) {
-        gsap.set(
-          progressFill,
-          {
-            scaleY: 0,
-            transformOrigin:
-              "top",
-          },
-        );
+        gsap.set(progressFill, {
+          scaleY: 0,
+          transformOrigin: "top",
+        });
       }
 
-      const intro =
-        gsap.timeline({
-          defaults: {
-            ease: "power3.out",
-          },
-        });
+      /*
+       * Initial page-load animation
+       */
+      const intro = gsap.timeline({
+        defaults: {
+          ease: "power3.out",
+        },
+      });
 
       intro
         .to(topbar, {
@@ -186,6 +176,7 @@ function HeroSection() {
           opacity: 1,
           duration: 0.45,
         })
+
         .to(
           eyebrow,
           {
@@ -195,6 +186,7 @@ function HeroSection() {
           },
           "-=0.22",
         )
+
         .to(
           letters,
           {
@@ -206,6 +198,7 @@ function HeroSection() {
           },
           "-=0.12",
         )
+
         .to(
           [description, techStack],
           {
@@ -216,6 +209,7 @@ function HeroSection() {
           },
           "-=0.36",
         )
+
         .to(
           visual,
           {
@@ -227,6 +221,7 @@ function HeroSection() {
           },
           "-=0.38",
         )
+
         .to(
           statCards,
           {
@@ -237,6 +232,7 @@ function HeroSection() {
           },
           "-=0.46",
         )
+
         .to(
           scrollCue,
           {
@@ -247,27 +243,35 @@ function HeroSection() {
           "-=0.1",
         );
 
+      /*
+       * Main scroll-driven timeline
+       */
       const scrollTimeline =
         gsap.timeline({
           scrollTrigger: {
             trigger: section,
+
             start: "top top",
+
             end: () =>
               `+=${Math.max(
                 window.innerHeight *
                   1.65,
                 1350,
               )}`,
+
             pin: true,
+
             scrub: 0.8,
+
             anticipatePin: 1,
-            invalidateOnRefresh:
-              true,
+
+            invalidateOnRefresh: true,
+
             onUpdate: (self) => {
               const percentage =
                 Math.round(
-                  self.progress *
-                    100,
+                  self.progress * 100,
                 );
 
               if (progressFill) {
@@ -280,9 +284,7 @@ function HeroSection() {
                 );
               }
 
-              if (
-                progressNumber
-              ) {
+              if (progressNumber) {
                 progressNumber.textContent =
                   String(
                     percentage,
@@ -295,18 +297,25 @@ function HeroSection() {
           },
         });
 
+      /*
+       * Phase 1
+       */
       scrollTimeline.to(
         visual,
         {
           xPercent: () =>
-            window.innerWidth <=
-            760
+            window.innerWidth <= 760
               ? 7
               : 15,
+
           yPercent: -1,
+
           scale: 1.025,
+
           rotate: 0.45,
+
           ease: "none",
+
           duration: 0.48,
         },
         0,
@@ -317,9 +326,12 @@ function HeroSection() {
           frontWheel,
           {
             rotation: 420,
+
             svgOrigin:
               "236 328",
+
             ease: "none",
+
             duration: 0.48,
           },
           0,
@@ -331,9 +343,12 @@ function HeroSection() {
           rearWheel,
           {
             rotation: 420,
+
             svgOrigin:
               "650 328",
+
             ease: "none",
+
             duration: 0.48,
           },
           0,
@@ -344,8 +359,11 @@ function HeroSection() {
         orbitOne,
         {
           rotate: 90,
+
           scale: 1.025,
+
           ease: "none",
+
           duration: 0.48,
         },
         0,
@@ -355,8 +373,11 @@ function HeroSection() {
         orbitTwo,
         {
           rotate: -65,
+
           scale: 0.98,
+
           ease: "none",
+
           duration: 0.48,
         },
         0,
@@ -366,25 +387,35 @@ function HeroSection() {
         heroCopy,
         {
           yPercent: -2,
+
           opacity: 0.94,
+
           ease: "none",
+
           duration: 0.48,
         },
         0,
       );
 
+      /*
+       * Phase 2
+       */
       scrollTimeline.to(
         visual,
         {
           xPercent: () =>
-            window.innerWidth <=
-            760
+            window.innerWidth <= 760
               ? -4
               : -8,
+
           yPercent: 1,
+
           scale: 0.99,
+
           rotate: -0.35,
+
           ease: "none",
+
           duration: 0.52,
         },
         0.48,
@@ -395,9 +426,12 @@ function HeroSection() {
           frontWheel,
           {
             rotation: 840,
+
             svgOrigin:
               "236 328",
+
             ease: "none",
+
             duration: 0.52,
           },
           0.48,
@@ -409,9 +443,12 @@ function HeroSection() {
           rearWheel,
           {
             rotation: 840,
+
             svgOrigin:
               "650 328",
+
             ease: "none",
+
             duration: 0.52,
           },
           0.48,
@@ -422,8 +459,11 @@ function HeroSection() {
         orbitOne,
         {
           rotate: 170,
+
           scale: 0.985,
+
           ease: "none",
+
           duration: 0.52,
         },
         0.48,
@@ -433,8 +473,11 @@ function HeroSection() {
         orbitTwo,
         {
           rotate: -135,
+
           scale: 1.02,
+
           ease: "none",
+
           duration: 0.52,
         },
         0.48,
@@ -444,13 +487,21 @@ function HeroSection() {
         heroCopy,
         {
           yPercent: -4,
+
           opacity: 0.88,
+
           ease: "none",
+
           duration: 0.52,
         },
         0.48,
       );
 
+      /*
+       * Subtle alternating card motion.
+       * 1 & 3 move slightly upward.
+       * 2 & 4 move slightly downward.
+       */
       scrollTimeline.to(
         statCards,
         {
@@ -458,22 +509,32 @@ function HeroSection() {
             index % 2 === 0
               ? -3
               : 3,
+
           ease: "none",
+
           stagger: 0.018,
+
           duration: 0.25,
         },
         0.55,
       );
 
+      /*
+       * Keep the bottom-right scroll cue
+       * visible through most of the experience.
+       */
       scrollTimeline.to(
         scrollCue,
         {
           y: 10,
+
           opacity: 0,
+
           ease: "none",
-          duration: 0.1,
+
+          duration: 0.18,
         },
-        0,
+        0.72,
       );
 
       const refreshId =
@@ -502,6 +563,8 @@ function HeroSection() {
     >
       <div className="hero-grid-pattern" />
 
+      {/* Scroll progress indicator */}
+
       <div
         className="scroll-progress"
         aria-hidden="true"
@@ -519,10 +582,15 @@ function HeroSection() {
         </span>
       </div>
 
+      {/* Background ambient lights */}
+
       <div className="hero-ambient hero-ambient-left" />
+
       <div className="hero-ambient hero-ambient-right" />
 
       <div className="hero-inner">
+        {/* Top navigation / branding */}
+
         <header className="hero-topbar">
           <a
             href="#hero"
@@ -547,11 +615,12 @@ function HeroSection() {
           </div>
         </header>
 
+        {/* Hero copy */}
+
         <div className="hero-copy">
           <div className="hero-eyebrow">
             <span>
-              INTERACTIVE WEB
-              EXPERIENCE
+              INTERACTIVE WEB EXPERIENCE
             </span>
 
             <span className="eyebrow-line" />
@@ -563,10 +632,7 @@ function HeroSection() {
           >
             <span className="hero-title-word">
               {welcomeLetters.map(
-                (
-                  letter,
-                  index,
-                ) => (
+                (letter, index) => (
                   <span
                     className="hero-letter"
                     key={`welcome-${index}`}
@@ -583,10 +649,7 @@ function HeroSection() {
               aria-hidden="true"
             >
               {brandLetters.map(
-                (
-                  letter,
-                  index,
-                ) => (
+                (letter, index) => (
                   <span
                     className="hero-letter"
                     key={`itzfizz-${index}`}
@@ -616,13 +679,15 @@ function HeroSection() {
           </div>
         </div>
 
+        {/* Main scroll visual */}
+
         <div className="hero-stage">
           <HeroVisual
-            visualRef={
-              visualRef
-            }
+            visualRef={visualRef}
           />
         </div>
+
+        {/* Statistics + scroll cue */}
 
         <div className="hero-bottom">
           <div className="stats-grid">
